@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
-    "test:ci": "ng test --watch=false --browsers=ChromeHeadless",
+    "test:ci": "npm install && ng test --watch=false --browsers=ChromeHeadless",
     "lint": "ng lint",
     "e2e": "concurrently \"ng serve --port 4201\" \"cypress open --browser chrome\"",
     "e2e:headless": "concurrently \"ng serve --port 4201\" \"cypress run --browser chrome\""
