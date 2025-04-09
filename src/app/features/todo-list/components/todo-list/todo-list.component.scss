@@ -1,3 +1,15 @@
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 .todo-list {
   max-width: 600px;
   margin: 0 auto;
@@ -46,6 +58,11 @@
       &:hover {
         background: #357abd;
       }
+
+      &:focus {
+        outline: 2px solid #4a90e2;
+        outline-offset: 2px;
+      }
     }
   }
 
@@ -53,7 +70,6 @@
     margin-bottom: 2rem;
 
     select {
-      width: 100%;
       padding: 0.5rem;
       border: 1px solid #ddd;
       border-radius: 4px;
@@ -62,8 +78,8 @@
       cursor: pointer;
 
       &:focus {
-        outline: none;
-        border-color: #4a90e2;
+        outline: 2px solid #4a90e2;
+        outline-offset: 2px;
       }
     }
   }

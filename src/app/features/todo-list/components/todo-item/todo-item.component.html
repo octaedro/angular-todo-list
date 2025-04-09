@@ -1,5 +1,22 @@
 <div class="todo-item" [class.completed]="todo.completed">
-  <input type="checkbox" [checked]="todo.completed" (change)="onToggle()">
-  <span>{{todo.title}}</span>
-  <button class="delete-btn" (click)="onDelete()">Delete</button>
+  <div class="todo-item__content">
+    <input
+      type="checkbox"
+      [checked]="todo.completed"
+      (change)="onToggle()"
+      [id]="'todo-' + todo.id"
+      [attr.aria-label]="'Mark ' + todo.title + ' as ' + (todo.completed ? 'incomplete' : 'complete')"
+    >
+    <label [for]="'todo-' + todo.id" class="todo-item__label">
+      <span [class.completed]="todo.completed">{{todo.title}}</span>
+    </label>
+  </div>
+  <button
+    class="delete-btn"
+    (click)="onDelete()"
+    [attr.aria-label]="'Delete ' + todo.title"
+  >
+    <span aria-hidden="true">×</span>
+    <span class="sr-only">Delete</span>
+  </button>
 </div>
