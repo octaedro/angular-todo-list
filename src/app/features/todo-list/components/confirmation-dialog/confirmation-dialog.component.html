@@ -1,0 +1,21 @@
+<div class="confirmation-dialog" role="dialog" aria-labelledby="dialog-title" aria-describedby="dialog-description">
+  <h2 mat-dialog-title id="dialog-title">Confirm Delete</h2>
+  <mat-dialog-content id="dialog-description">
+    <p>Are you sure you want to delete "{{ data.taskTitle }}"?</p>
+    <p class="warning" role="alert">This action cannot be undone.</p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button
+            (click)="onNoClick()"
+            aria-label="Cancel deletion"
+            #cancelButton>
+      Cancel
+    </button>
+    <button mat-raised-button
+            color="warn"
+            (click)="onYesClick()"
+            aria-label="Delete task">
+      Delete
+    </button>
+  </mat-dialog-actions>
+</div>
