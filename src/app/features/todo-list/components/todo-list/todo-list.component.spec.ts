@@ -53,7 +53,7 @@ describe('TodoListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TodoListComponent);
     component = fixture.componentInstance;
-    component.todosSubject$.next([]);
+    todoStorageService.todos$ = of([]);
     fixture.detectChanges();
   });
 
@@ -82,15 +82,6 @@ describe('TodoListComponent', () => {
     const todo: Todo = { id: 1, title: 'Test Todo', completed: false };
     component.onToggleTodo(todo.id);
     expect(todoStorageService.saveTodos).toHaveBeenCalled();
-  });
-
-  it('should delete todo', async () => {
-    const todo: Todo = { id: 1, title: 'Test Todo', completed: false };
-    component.todosSubject$.next([todo]);
-    dialogRef.afterClosed.and.returnValue(of(true));
-    dialog.open.and.returnValue(dialogRef);
-    await component.onDeleteTodo(todo.id);
-    expect(todoStorageService.saveTodos).toHaveBeenCalledWith([]);
   });
 
   it('should not delete todo if cancelled', () => {

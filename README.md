@@ -14,27 +14,17 @@
 - Filter tasks by status (All, Completed, Incomplete)
 - **Task list persistence**: All tasks and filter status are automatically saved in the browser's local storage, ensuring your data remains available even after page reloads
 
-## Development server
+## Development
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+- **Dev server**: Run `ng serve` and navigate to `http://localhost:4200/`
+- **Build**: Run `ng build` (artifacts in `dist/` directory, use `--prod` for production)
+- **Unit tests**: Run `ng test` to execute tests via [Karma](https://karma-runner.github.io)
 
 ## GitHub Actions
 
-Due to the use of Node.js 14, Husky (which requires Node 18+) is not available for local pre-push enforcement.  
-To ensure code quality, this project uses a GitHub Actions workflow that runs tests on every push and pull request.  
-Merging into the `main` branch is only allowed if all tests pass.
+- Due to the use of Node.js 14, Husky (which requires Node 18+) is not available for local pre-push enforcement
+- To ensure code quality, this project uses a GitHub Actions workflow that runs tests on every push and pull request
+- Merging into the `main` branch is only allowed if all tests pass
 
 ## Accessibility
 
@@ -72,3 +62,28 @@ To run the e2e tests:
 npm run e2e        # Opens Cypress in interactive mode
 npm run e2e:headless  # Runs tests in headless mode
 ```
+
+# Improvements
+
+### Development Workflow
+
+- **Pre-commit Hooks**: Implement Husky to run tests and linting before each commit, ensuring code quality.
+- **Pull Request Documentation**: Enhance PR descriptions with detailed information about changes, testing performed, and impact analysis.
+- **Component Documentation**: Add Storybook to document components, their variations, and usage examples.
+
+### Testing Strategy
+
+- **E2E Testing**: Expand E2E test coverage to include all critical and important user flows.
+- **Continuous Integration**: Implement GitHub Actions to run E2E tests daily, ensuring system robustness.
+- **Responsive Testing**: Add device testing across multiple screen sizes and browsers to ensure consistent user experience.
+
+### Code Quality
+
+- **Type Safety**: Enhance TypeScript configurations for stricter type checking.
+- **Performance Monitoring**: Add performance metrics and monitoring for critical operations.
+- **Accessibility**: Implement automated accessibility testing to ensure WCAG compliance.
+
+### User Experience
+
+- **Offline Support**: Add service worker for offline functionality.
+- **Internationalization**: Add support for multiple languages.
