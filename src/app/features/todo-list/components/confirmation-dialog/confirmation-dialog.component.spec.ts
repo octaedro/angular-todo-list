@@ -3,7 +3,6 @@ import { ConfirmationDialogComponent } from './confirmation-dialog.component';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
-import 'jasmine';
 
 describe('ConfirmationDialogComponent', () => {
   let component: ConfirmationDialogComponent;
