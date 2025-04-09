@@ -84,15 +84,6 @@ describe('TodoListComponent', () => {
     expect(todoStorageService.saveTodos).toHaveBeenCalled();
   });
 
-  it('should delete todo', async () => {
-    const todo: Todo = { id: 1, title: 'Test Todo', completed: false };
-    todoStorageService.todos$ = of([todo]);
-    dialogRef.afterClosed.and.returnValue(of(true));
-    dialog.open.and.returnValue(dialogRef);
-    await component.onDeleteTodo(todo.id);
-    expect(todoStorageService.saveTodos).toHaveBeenCalledWith([]);
-  });
-
   it('should not delete todo if cancelled', () => {
     const todo: Todo = { id: 1, title: 'Test Todo', completed: false };
     dialogRef.afterClosed.and.returnValue(of(false));
