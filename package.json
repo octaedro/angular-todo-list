@@ -8,7 +8,8 @@
     "test": "ng test",
     "test:ci": "ng test --watch=false --browsers=ChromeHeadless",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "concurrently \"ng serve --port 4201\" \"cypress open --browser chrome\"",
+    "e2e:headless": "concurrently \"ng serve --port 4201\" \"cypress run --browser chrome\""
   },
   "private": true,
   "dependencies": {
@@ -31,9 +32,10 @@
     "@angular/cli": "~10.2.4",
     "@angular/compiler-cli": "10.2.5",
     "@types/jasmine": "~3.5.0",
-    "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
     "codelyzer": "^6.0.0",
+    "concurrently": "^8.2.2",
+    "cypress": "^13.6.4",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~5.0.0",
@@ -41,7 +43,6 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.5.0",
-    "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~4.0.2"

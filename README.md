@@ -1,6 +1,10 @@
-# FernandoMarichalTodoList
+# Fernando Marichal - TodoList
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.1.
+### Prerequisites
+
+- Node.js (v14 or later)
+- npm (v6 or later)
+- Angular CLI (v10.2.4)
 
 ## Features
 
@@ -50,3 +54,21 @@ The application implements several accessibility considerations:
   - Properly associated labels with inputs
   - Descriptive error messages
   - Clear action buttons
+
+### End-to-End Tests
+
+We use Cypress for end-to-end testing instead of Protractor for several reasons:
+
+1. **Modern Tooling**: Cypress is actively maintained and provides a better developer experience
+2. **Better Chrome Support**: Cypress has better compatibility with recent Chrome versions
+3. **Visual Interface**: Cypress provides a visual interface for running and debugging tests
+4. **Simpler Syntax**: Tests are easier to write and maintain with Cypress
+5. **Better Async Handling**: Cypress handles asynchronous operations more elegantly
+6. **Automatic Screenshots**: Cypress automatically takes screenshots on test failures
+
+To run the e2e tests:
+
+```bash
+npm run e2e        # Opens Cypress in interactive mode
+npm run e2e:headless  # Runs tests in headless mode
+```
