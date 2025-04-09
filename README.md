@@ -25,3 +25,9 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## GitHub Actions
+
+Due to the use of Node.js 14, Husky (which requires Node 18+) is not available for local pre-push enforcement.  
+To ensure code quality, this project uses a GitHub Actions workflow that runs tests on every push and pull request.  
+Merging into the `main` branch is only allowed if all tests pass.
