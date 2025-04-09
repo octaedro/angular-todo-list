@@ -1,0 +1,24 @@
+<div class="todo-container">
+  <h2>Fernando's Todo List</h2>
+
+  <div class="todo-input">
+    <input type="text" [(ngModel)]="newTodo" placeholder="Add a new task" (keyup.enter)="addTodo(newTodo)">
+    <button (click)="addTodo(newTodo)">Add Task</button>
+  </div>
+
+  <div class="filter-container">
+    <select (change)="setFilter($event.target.value)">
+      <option value="all">All</option>
+      <option value="completed">Completed</option>
+      <option value="incomplete">Incomplete</option>
+    </select>
+  </div>
+
+  <ul class="todo-list">
+    <li *ngFor="let todo of filteredTodos$ | async" class="todo-item" [class.completed]="todo.completed">
+      <input type="checkbox" [checked]="todo.completed" (change)="toggleTodo(todo)">
+      <span>{{todo.title}}</span>
+      <button class="delete-btn" (click)="deleteTodo(todo)">Delete</button>
+    </li>
+  </ul>
+</div>
