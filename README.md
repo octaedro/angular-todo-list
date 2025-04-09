@@ -6,7 +6,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 - Add new tasks
 - Mark tasks as completed
-- Delete tasks
+- Delete tasks (with confirmation dialog)
 - Filter tasks by status (All, Completed, Incomplete)
 - **Task list persistence**: All tasks and filter status are automatically saved in the browser's local storage, ensuring your data remains available even after page reloads
 

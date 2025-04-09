@@ -3,6 +3,8 @@ import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Todo, TodoFilter } from '../../todo.types';
 import { TodoStorageService } from '../../services/todo-storage.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-todo-list',
@@ -29,7 +31,10 @@ export class TodoListComponent implements OnInit, OnDestroy {
     })
   );
 
-  constructor(private todoStorage: TodoStorageService) {}
+  constructor(
+    private todoStorage: TodoStorageService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     // Subscribe to storage service
@@ -78,9 +83,19 @@ export class TodoListComponent implements OnInit, OnDestroy {
     this.todoStorage.saveTodos(updatedTodos);
   }
 
-  onDeleteTodo(todoId: number) {
-    const currentTodos = this.todosSubject$.value;
-    const updatedTodos = currentTodos.filter(todo => todo.id !== todoId);
-    this.todoStorage.saveTodos(updatedTodos);
+  async onDeleteTodo(todoId: number) {
+    const todoToDelete = this.todosSubject$.value.find(todo => todo.id === todoId);
+    if (!todoToDelete) return;
+
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: { taskTitle: todoToDelete.title }
+    });
+
+    const result = await dialogRef.afterClosed().toPromise();
+    if (result) {
+      const currentTodos = this.todosSubject$.value;
+      const updatedTodos = currentTodos.filter(todo => todo.id !== todoId);
+      this.todoStorage.saveTodos(updatedTodos);
+    }
   }
 }
