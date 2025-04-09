@@ -87,3 +87,20 @@ npm run e2e:headless  # Runs tests in headless mode
 
 - **Offline Support**: Add service worker for offline functionality.
 - **Internationalization**: Add support for multiple languages.
+
+## Security Considerations
+
+These vulnerabilities exist in **transitive dependencies**. Even though they don't appear in the `package.json`, they're still part of the application's dependency tree as shown in `package-lock.json`. If exploited, these vulnerabilities could potentially lead to security issues like code execution, data exposure, or application compromise.
+
+### Known Vulnerabilities
+
+The following dependencies have been identified as having security vulnerabilities:
+
+| Dependency             | Severity | Location          | Status         |
+| ---------------------- | -------- | ----------------- | -------------- |
+| loader-utils           | Critical | package-lock.json | Pending Update |
+| rollup                 | High     | package-lock.json | Pending Update |
+| braces                 | High     | package-lock.json | Pending Update |
+| ip                     | High     | package-lock.json | Pending Update |
+| webpack-dev-middleware | High     | package-lock.json | Pending Update |
+| node-forge             | High     | package-lock.json | Pending Update |
