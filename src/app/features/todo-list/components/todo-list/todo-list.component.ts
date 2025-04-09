@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Todo, TodoFilter } from '../../todo.types';
+import { TodoStorageService } from '../../services/todo-storage.service';
 
 @Component({
   selector: 'app-todo-list',
@@ -28,10 +29,21 @@ export class TodoListComponent implements OnInit, OnDestroy {
     })
   );
 
+  constructor(private todoStorage: TodoStorageService) {}
+
   ngOnInit() {
+    // Subscribe to storage service
     this.subscription.add(
-      this.filterSubject$.subscribe(filter => {
+      this.todoStorage.todos$.subscribe(todos => {
+        this.todosSubject$.next(todos);
+      })
+    );
+
+    // Subscribe to filter from storage
+    this.subscription.add(
+      this.todoStorage.filter$.subscribe(filter => {
         this.currentFilter = filter;
+        this.filterSubject$.next(filter);
       })
     );
   }
@@ -48,13 +60,14 @@ export class TodoListComponent implements OnInit, OnDestroy {
         completed: false
       };
       const currentTodos = this.todosSubject$.value;
-      this.todosSubject$.next([...currentTodos, newTodo]);
+      const updatedTodos = [...currentTodos, newTodo];
+      this.todoStorage.saveTodos(updatedTodos);
       this.newTodo = '';
     }
   }
 
   setFilter(filter: TodoFilter) {
-    this.filterSubject$.next(filter);
+    this.todoStorage.saveFilter(filter);
   }
 
   onToggleTodo(todoId: number) {
@@ -62,12 +75,12 @@ export class TodoListComponent implements OnInit, OnDestroy {
     const updatedTodos = currentTodos.map(todo =>
       todo.id === todoId ? { ...todo, completed: !todo.completed } : todo
     );
-    this.todosSubject$.next(updatedTodos);
+    this.todoStorage.saveTodos(updatedTodos);
   }
 
   onDeleteTodo(todoId: number) {
     const currentTodos = this.todosSubject$.value;
     const updatedTodos = currentTodos.filter(todo => todo.id !== todoId);
-    this.todosSubject$.next(updatedTodos);
+    this.todoStorage.saveTodos(updatedTodos);
   }
 }

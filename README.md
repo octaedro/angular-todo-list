@@ -2,6 +2,14 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.1.
 
+## Features
+
+- Add new tasks
+- Mark tasks as completed
+- Delete tasks
+- Filter tasks by status (All, Completed, Incomplete)
+- **Task list persistence**: All tasks and filter status are automatically saved in the browser's local storage, ensuring your data remains available even after page reloads
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
