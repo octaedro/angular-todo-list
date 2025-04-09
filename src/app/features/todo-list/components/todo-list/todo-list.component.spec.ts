@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { FormsModule } from '@angular/forms';
 import { TodoListComponent } from './todo-list.component';
+import { TodoItemComponent } from '../todo-item/todo-item.component';
 
 describe('TodoListComponent', () => {
   let component: TodoListComponent;
@@ -8,9 +9,9 @@ describe('TodoListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TodoListComponent ]
-    })
-    .compileComponents();
+      declarations: [TodoListComponent, TodoItemComponent],
+      imports: [FormsModule]
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,22 +20,42 @@ describe('TodoListComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should mark a todo item as completed', () => {
-    component.addTodo('Test task');
-    component.todos[0].completed = true;
-    expect(component.todos[0].completed).toBe(true);
+  it('should create', () => {
+    expect(component).toBeTruthy();
   });
 
-  it('should toggle a todo item', () => {
-    component.addTodo('Test task');
-    component.todos[0].completed = true;
-    component.toggleTodo(component.todos[0]);
-    expect(component.todos[0].completed).toBe(false);
+  it('should add a new todo', () => {
+    component.newTodo = 'Test task';
+    component.addTodo();
+    expect(component.todosSubject$.value.length).toBe(1);
+    expect(component.todosSubject$.value[0].title).toBe('Test task');
+    expect(component.todosSubject$.value[0].completed).toBe(false);
   });
 
-  it('should delete a todo item', () => {
-    component.addTodo('Test task');
-    component.deleteTodo(component.todos[0]);
-    expect(component.todos.length).toBe(0);
+  it('should not add empty todo', () => {
+    component.newTodo = '   ';
+    component.addTodo();
+    expect(component.todosSubject$.value.length).toBe(0);
+  });
+
+  it('should set filter correctly', () => {
+    component.setFilter('completed');
+    expect(component.currentFilter).toBe('completed');
+  });
+
+  it('should toggle todo completion', () => {
+    component.newTodo = 'Test task';
+    component.addTodo();
+    const todoId = component.todosSubject$.value[0].id;
+    component.onToggleTodo(todoId);
+    expect(component.todosSubject$.value[0].completed).toBe(true);
+  });
+
+  it('should delete todo', () => {
+    component.newTodo = 'Test task';
+    component.addTodo();
+    const todoId = component.todosSubject$.value[0].id;
+    component.onDeleteTodo(todoId);
+    expect(component.todosSubject$.value.length).toBe(0);
   });
 });

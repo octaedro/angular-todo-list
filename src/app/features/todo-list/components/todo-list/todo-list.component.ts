@@ -1,31 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-interface Todo {
-  id: number;
-  title: string;
-  completed: boolean;
-}
-
-type FilterType = 'all' | 'completed' | 'incomplete';
+import { Todo, TodoFilter } from '../../todo.types';
 
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.scss']
 })
-export class TodoListComponent implements OnInit {
-  todos: Todo[] = [];
-  newTodo: string = '';
+export class TodoListComponent implements OnInit, OnDestroy {
+  newTodo = '';
+  filterSubject$ = new BehaviorSubject<TodoFilter>('all');
+  todosSubject$ = new BehaviorSubject<Todo[]>([]);
+  currentFilter: TodoFilter = 'all';
+  private subscription = new Subscription();
 
-  private filterSubject$ = new BehaviorSubject<FilterType>('all');
-  private todosSubject$ = new BehaviorSubject<Todo[]>(this.todos);
-
-  filteredTodos$ = combineLatest([
-    this.todosSubject$,
-    this.filterSubject$
-  ]).pipe(
+  filteredTodos$ = combineLatest([this.todosSubject$, this.filterSubject$]).pipe(
     map(([todos, filter]) => {
       switch (filter) {
         case 'completed':
@@ -39,33 +29,45 @@ export class TodoListComponent implements OnInit {
   );
 
   ngOnInit() {
-    this.todosSubject$.next(this.todos);
+    this.subscription.add(
+      this.filterSubject$.subscribe(filter => {
+        this.currentFilter = filter;
+      })
+    );
   }
 
-  addTodo(title: string = this.newTodo): void {
-    if (title.trim()) {
-      const todo: Todo = {
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  addTodo() {
+    if (this.newTodo.trim()) {
+      const newTodo: Todo = {
         id: Date.now(),
-        title: title,
+        title: this.newTodo.trim(),
         completed: false
       };
-      this.todos.push(todo);
+      const currentTodos = this.todosSubject$.value;
+      this.todosSubject$.next([...currentTodos, newTodo]);
       this.newTodo = '';
-      this.todosSubject$.next(this.todos);
     }
   }
 
-  toggleTodo(todo: Todo): void {
-    todo.completed = !todo.completed;
-    this.todosSubject$.next(this.todos);
-  }
-
-  deleteTodo(todo: Todo): void {
-    this.todos = this.todos.filter(t => t.id !== todo.id);
-    this.todosSubject$.next(this.todos);
-  }
-
-  setFilter(filter: FilterType): void {
+  setFilter(filter: TodoFilter) {
     this.filterSubject$.next(filter);
+  }
+
+  onToggleTodo(todoId: number) {
+    const currentTodos = this.todosSubject$.value;
+    const updatedTodos = currentTodos.map(todo =>
+      todo.id === todoId ? { ...todo, completed: !todo.completed } : todo
+    );
+    this.todosSubject$.next(updatedTodos);
+  }
+
+  onDeleteTodo(todoId: number) {
+    const currentTodos = this.todosSubject$.value;
+    const updatedTodos = currentTodos.filter(todo => todo.id !== todoId);
+    this.todosSubject$.next(updatedTodos);
   }
 }

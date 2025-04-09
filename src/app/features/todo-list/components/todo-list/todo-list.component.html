@@ -1,24 +1,33 @@
-<div class="todo-container">
-  <h2>Fernando's Todo List</h2>
-
-  <div class="todo-input">
-    <input type="text" [(ngModel)]="newTodo" placeholder="Add a new task" (keyup.enter)="addTodo(newTodo)">
-    <button (click)="addTodo(newTodo)">Add Task</button>
+<div class="todo-list">
+  <div class="todo-list__header">
+    <h1>Todo List</h1>
+    <div class="todo-list__input">
+      <input
+        type="text"
+        [(ngModel)]="newTodo"
+        (keyup.enter)="addTodo()"
+        placeholder="Add a new todo..."
+      >
+      <button (click)="addTodo()">Add</button>
+    </div>
   </div>
 
-  <div class="filter-container">
-    <select (change)="setFilter($event.target.value)">
+  <div class="todo-list__filters">
+    <select [ngModel]="currentFilter" (ngModelChange)="setFilter($event)">
       <option value="all">All</option>
       <option value="completed">Completed</option>
       <option value="incomplete">Incomplete</option>
     </select>
   </div>
 
-  <ul class="todo-list">
-    <li *ngFor="let todo of filteredTodos$ | async" class="todo-item" [class.completed]="todo.completed">
-      <input type="checkbox" [checked]="todo.completed" (change)="toggleTodo(todo)">
-      <span>{{todo.title}}</span>
-      <button class="delete-btn" (click)="deleteTodo(todo)">Delete</button>
-    </li>
-  </ul>
+  <div class="todo-list__items">
+    <ng-container *ngIf="filteredTodos$ | async as todos">
+      <app-todo-item
+        *ngFor="let todo of todos"
+        [todo]="todo"
+        (toggle)="onToggleTodo(todo.id)"
+        (delete)="onDeleteTodo(todo.id)"
+      ></app-todo-item>
+    </ng-container>
+  </div>
 </div>
