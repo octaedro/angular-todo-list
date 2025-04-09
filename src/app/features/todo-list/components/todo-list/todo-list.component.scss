@@ -1,82 +1,76 @@
-.todo-container {
+.todo-list {
   max-width: 600px;
   margin: 0 auto;
-  padding: 20px;
-}
+  padding: 2rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-.todo-input {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  &__header {
+    margin-bottom: 2rem;
 
-  input {
-    flex: 1;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-
-  button {
-    padding: 8px 16px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-
-    &:hover {
-      background-color: #45a049;
+    h1 {
+      margin: 0 0 1rem;
+      color: #333;
+      font-size: 2rem;
     }
   }
-}
 
-.filter-container {
-  margin-bottom: 20px;
-
-  select {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: white;
-    cursor: pointer;
-  }
-}
-
-.todo-list {
-  list-style: none;
-  padding: 0;
-
-  .todo-item {
+  &__input {
     display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px;
-    border-bottom: 1px solid #eee;
+    gap: 0.5rem;
 
-    &.completed {
-      span {
-        text-decoration: line-through;
-        color: #888;
+    input {
+      flex: 1;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+
+      &:focus {
+        outline: none;
+        border-color: #4a90e2;
       }
     }
 
-    input[type="checkbox"] {
-      cursor: pointer;
-    }
-
-    .delete-btn {
-      margin-left: auto;
-      padding: 4px 8px;
-      background-color: #f44336;
+    button {
+      padding: 0.5rem 1rem;
+      background: #4a90e2;
       color: white;
       border: none;
       border-radius: 4px;
       cursor: pointer;
-      font-size: 12px;
+      font-size: 1rem;
+      transition: background 0.2s;
 
       &:hover {
-        background-color: #d32f2f;
+        background: #357abd;
       }
     }
+  }
+
+  &__filters {
+    margin-bottom: 2rem;
+
+    select {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+      background-color: white;
+      cursor: pointer;
+
+      &:focus {
+        outline: none;
+        border-color: #4a90e2;
+      }
+    }
+  }
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
   }
 }
